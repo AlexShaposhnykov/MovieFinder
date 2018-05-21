@@ -1,6 +1,8 @@
 import React from 'react';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import { Switch, Route } from 'react-router';
+import { BrowserRouter } from 'react-router-dom';
 
 import Layout from './hoc/Layout/Layout';
 import HomePage from './containers/HomePage/HomePage';
@@ -28,9 +30,16 @@ const theme = createMuiTheme({
 const app = () => (
   <MuiThemeProvider theme={theme}>
     <CssBaseline />
-    <Layout>
-      <HomePage />
-    </Layout>
+    <BrowserRouter>
+      <Layout>
+        <Switch>
+          <Route
+            path="/"
+            component={HomePage}
+          />
+        </Switch>
+      </Layout>
+    </BrowserRouter>
   </MuiThemeProvider>
 );
 

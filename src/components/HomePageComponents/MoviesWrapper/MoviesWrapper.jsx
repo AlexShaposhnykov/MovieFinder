@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import { withStyles } from '@material-ui/core/styles';
 import Slide from '@material-ui/core/Slide';
-
 import Paper from '@material-ui/core/Paper';
 
 const styles = {
@@ -15,7 +14,7 @@ const styles = {
   },
 };
 
-const MoviesWrapper = ({ classes, shouldAnimateIn }) => (
+const MoviesWrapper = ({ classes, shouldAnimateIn, children }) => (
   <Fragment>
     <Slide
       in={shouldAnimateIn}
@@ -27,7 +26,9 @@ const MoviesWrapper = ({ classes, shouldAnimateIn }) => (
       mountOnEnter
       unmountOnExit
     >
-      <Paper className={classes.paperStyles} />
+      <Paper className={classes.paperStyles}>
+        {children}
+      </Paper>
     </Slide>
   </Fragment>
 );
@@ -35,6 +36,14 @@ const MoviesWrapper = ({ classes, shouldAnimateIn }) => (
 MoviesWrapper.propTypes = {
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
   shouldAnimateIn: PropTypes.bool.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
+};
+
+MoviesWrapper.defaultProps = {
+  children: null,
 };
 
 export default withStyles(styles)(MoviesWrapper);

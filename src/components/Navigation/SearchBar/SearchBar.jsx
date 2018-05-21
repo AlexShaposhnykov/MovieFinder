@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-duplicate-props */
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
@@ -8,9 +9,16 @@ import Collapse from '@material-ui/core/Collapse';
 const styles = {
   inputStyles: {
     backgroundColor: 'white',
-    padding: '8px 26px',
     borderRadius: '100px',
-    boxShadow: '0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12), 0 2px 4px -1px rgba(0, 0, 0, .2)',
+  },
+  coreInputStyles: {
+    boxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)',
+    transition: 'all .3s ease',
+    '&:hover, &:focus': {
+      boxShadow: '0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)',
+    },
+    borderRadius: 100,
+    padding: '13px 26px',
   },
   inputWrapperStyles: {
     width: '100%',
@@ -61,6 +69,9 @@ class SearchBar extends Component {
               InputProps={{
                 className: classes.inputStyles,
                 disableUnderline: true,
+              }}
+              inputProps={{
+                className: classes.coreInputStyles,
               }}
               inputRef={(el) => { this.searchInput = el; }}
               className={classes.inputWrapperStyles}

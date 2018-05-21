@@ -1,10 +1,10 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+
 import { withStyles } from '@material-ui/core/styles';
-
 import Typography from '@material-ui/core/Typography';
-
 import MoviesWrapper from '../../components/HomePageComponents/MoviesWrapper/MoviesWrapper';
+import MoviesGrid from '../../components/HomePageComponents/MoviesGrid/MoviesGrid';
 
 const styles = {
   headline: {
@@ -13,37 +13,24 @@ const styles = {
   },
 };
 
-class HomePage extends Component {
-  static propTypes = {
-    classes: PropTypes.objectOf(PropTypes.string).isRequired,
-  }
+const HomePage = ({ classes }) => (
+  <Fragment>
+    <Typography
+      variant="headline"
+      component="h1"
+      align="center"
+      className={classes.headline}
+    >
+      Most Popular Movies
+    </Typography>
+    <MoviesWrapper shouldAnimateIn>
+      <MoviesGrid />
+    </MoviesWrapper>
+  </Fragment>
+);
 
-  state = {
-    renderMoviesWrapper: false,
-  }
-
-  componentDidMount = () => {
-    this.setState({ renderMoviesWrapper: true });
-  }
-
-  render() {
-    const { renderMoviesWrapper } = this.state;
-    const { classes } = this.props;
-
-    return (
-      <Fragment>
-        <Typography
-          variant="headline"
-          component="h1"
-          align="center"
-          className={classes.headline}
-        >
-          Most Popular Movies
-        </Typography>
-        <MoviesWrapper shouldAnimateIn={renderMoviesWrapper} />
-      </Fragment>
-    );
-  }
-}
+HomePage.propTypes = {
+  classes: PropTypes.objectOf(PropTypes.string).isRequired,
+};
 
 export default withStyles(styles)(HomePage);
