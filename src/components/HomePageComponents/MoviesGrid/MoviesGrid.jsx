@@ -18,8 +18,10 @@ class MoviesGrid extends Component {
     movies: PropTypes.arrayOf(PropTypes.object).isRequired,
     moviesGenres: PropTypes.arrayOf(PropTypes.object).isRequired,
     loading: PropTypes.bool.isRequired,
+    loadingGenres: PropTypes.bool.isRequired,
     initMoviesFetch: PropTypes.func.isRequired,
     lastPage: PropTypes.number,
+    curPage: PropTypes.number.isRequired,
   }
 
   static defaultProps = {
@@ -27,18 +29,17 @@ class MoviesGrid extends Component {
   }
 
   state = {
-    currMoviesPage: 1,
     hasMorePages: true,
   }
 
-  handleMoviesLoad = (currPage) => {
-    if (this.props.loading) return;
-    this.props.initMoviesFetch(currPage);
-    this.setState({ currMoviesPage: this.state.currMoviesPage + 1 });
+  handleMoviesLoad = () => {
+    if (!this.props.loading && !this.props.loadingGenres) {
+      this.props.initMoviesFetch(this.props.curPage);
+    }
   }
 
   checkMoviesPages = () => {
-    this.setState({ hasMorePages: (this.state.currMoviesPage <= this.props.lastPage) });
+    this.setState({ hasMorePages: (this.props.curPage + 1 <= this.props.lastPage) });
   }
 
   render() {
@@ -46,11 +47,12 @@ class MoviesGrid extends Component {
     const {
       movies,
       moviesGenres,
+      curPage,
     } = this.props;
 
     return (
       <InfiniteScroll
-        pageStart={0}
+        pageStart={curPage}
         loadMore={this.handleMoviesLoad}
         hasMore={hasMorePages}
         element="div"
@@ -82,12 +84,13 @@ const mapStateToProps = state => ({
   movies: state.Home.popularMovies,
   moviesGenres: state.Home.moviesGenres,
   loading: state.Home.loading,
+  loadingGenres: state.Home.loadingGenres,
   lastPage: state.Home.lastPage,
+  curPage: state.Home.curPage,
 });
 
 const mapDispatchToProps = dispatch => ({
   initMoviesFetch: pageNum => dispatch(actions.initMoviesFetch(pageNum)),
-  initMoviesGenresFetch: () => dispatch(actions.initMoviesGenresFetch()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MoviesGrid);

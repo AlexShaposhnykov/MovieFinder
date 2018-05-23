@@ -11,11 +11,13 @@ import './index.css';
 import App from './App';
 
 import HomePageReducer from './store/reducers/HomePage';
+import MoviePageReducer from './store/reducers/MoviePage';
 
 import registerServiceWorker from './registerServiceWorker';
 
 const rootReducer = combineReducers({
   Home: HomePageReducer,
+  MoviePage: MoviePageReducer,
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

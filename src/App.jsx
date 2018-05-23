@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import Layout from './hoc/Layout/Layout';
 import HomePage from './containers/HomePage/HomePage';
+import MoviePage from './containers/MoviePage/MoviePage';
 
 const theme = createMuiTheme({
   palette: {
@@ -33,6 +34,10 @@ const app = () => (
     <BrowserRouter>
       <Layout>
         <Switch>
+          <Route
+            path="/movie/:id"
+            component={MoviePage}
+          />
           <Route
             path="/"
             component={HomePage}
