@@ -47,6 +47,7 @@ const RelMoviesCard = ({
             {moviesList.map(movieObj => (
               <Grid item key={`${movieObj.id + 1}-${movieObj.title}`}>
                 <MovieCard
+                  movieObj={movieObj}
                   title={movieObj.title}
                   posterUrl={`http://image.tmdb.org/t/p/w342//${movieObj.poster_path}`}
                   movieId={movieObj.id}

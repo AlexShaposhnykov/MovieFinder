@@ -6,3 +6,8 @@ export {
 export {
   initSelectedMovieFetch,
 } from './MoviePage';
+
+export {
+  addToStorage,
+  deleteFromStorage,
+} from './Favorites';

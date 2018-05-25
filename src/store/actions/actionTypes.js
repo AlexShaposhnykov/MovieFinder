@@ -28,4 +28,11 @@ export const RECOMMENDED_MOVIES_FETCH_FAIL = 'RECOMMENDED_MOVIES_FETCH_FAIL';
 export const INIT_SIMILAR_MOVIES_FETCH = 'INIT_SIMILAR_MOVIES_FETCH';
 export const SET_SIMILAR_MOVIES = 'SET_SIMILAR_MOVIES';
 export const SIMILAR_MOVIES_FETCH_FAIL = 'SIMILAR_MOVIES_FETCH_FAIL';
-
+/**
+|--------------------------------------------------
+| Favorites action types
+|--------------------------------------------------
+*/
+export const ADD_TO_STORAGE = 'ADD_TO_STORAGE';
+export const DELETE_FROM_STORAGE = 'DELETE_FROM_STORAGE';
+export const SYNC_STORAGE = 'SYNC_STORAGE';

@@ -2,6 +2,8 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 import SelectedMovieCard from '../../components/MoviePageComponents/SelectedMovieCard/SelectedMovieCard';
 
 import RelMoviesCard from '../../components/MoviePageComponents/RelatedMoviesCard/RelMoviesCard';
@@ -59,12 +61,19 @@ class MoviePage extends Component {
       moviesGenres,
     } = this.props;
 
+    let selectedMovieCard = <CircularProgress color="primary" />;
+    if (!loading && !Array.isArray(selectedMovie)) {
+      selectedMovieCard = (
+        <SelectedMovieCard
+          movieObj={selectedMovie}
+          movieId={selectedMovie.id}
+        />
+      );
+    }
+
     return (
       <Fragment>
-        <SelectedMovieCard
-          loadingMovie={loading}
-          selectedMovie={selectedMovie}
-        />
+        { selectedMovieCard }
         <RelMoviesCard
           relatedType="recommendedMovies"
           loading={loadingRecommended}

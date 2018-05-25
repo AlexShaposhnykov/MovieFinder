@@ -1,51 +1,77 @@
-import React from 'react';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import { Switch, Route } from 'react-router';
-import { BrowserRouter } from 'react-router-dom';
+/* eslint-disable*/
+import React, { Component } from 'react';
 
-import Layout from './hoc/Layout/Layout';
-import HomePage from './containers/HomePage/HomePage';
-import MoviePage from './containers/MoviePage/MoviePage';
+import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
 
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#363237',
-      light: '#605b61',
-      dark: '100a11',
-      contrastText: '#ffffff',
-    },
-    background: {
-      default: '#9d6856',
-    },
-    secondary: {
-      main: '#d09683',
-      light: '#ffc7b3',
-      dark: '9d6856',
-      contrastText: '#000000',
-    },
-  },
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+import { persistStore, autoRehydrate } from 'redux-persist';
+import { asyncLocalStorage } from 'redux-persist/storages';
+
+import HomePageReducer from './store/reducers/HomePage';
+import MoviePageReducer from './store/reducers/MoviePage';
+import FavoritesReducer from './store/reducers/Favorites';
+
+import Root from './root';
+
+const rootReducer = combineReducers({
+  Home: HomePageReducer,
+  MoviePage: MoviePageReducer,
+  Favorites: FavoritesReducer,
 });
 
-const app = () => (
-  <MuiThemeProvider theme={theme}>
-    <CssBaseline />
-    <BrowserRouter>
-      <Layout>
-        <Switch>
-          <Route
-            path="/movie/:id"
-            component={MoviePage}
-          />
-          <Route
-            path="/"
-            component={HomePage}
-          />
-        </Switch>
-      </Layout>
-    </BrowserRouter>
-  </MuiThemeProvider>
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const store = createStore(
+  rootReducer,
+  composeEnhancers(
+    applyMiddleware(thunk),
+    autoRehydrate(),
+  ),
 );
 
-export default app;
+class App extends Component {
+  state = {
+    isReady: false,
+  }
+
+  // Redux-persist setup
+  componentDidMount = () => {
+    persistStore(
+      store, 
+      {
+        storage: asyncLocalStorage,
+        whitelist: ['Favorites'],
+      },
+      () => {
+        this.setState({ isReady: true })
+      }
+    );
+  }
+
+  render() {
+    const { isReady } = this.state;
+
+    if (!isReady) {
+      return <CircularProgress
+        style={{
+          position: 'absolute',
+          top: '50%',
+          left: '48%',
+          color: '#212121',
+          animationDuration: '.6s',
+        }}
+      />
+    }
+
+    return (
+      <Provider store={store}>
+        <Root />
+      </Provider>
+    );
+  }
+}
+
+export default App;

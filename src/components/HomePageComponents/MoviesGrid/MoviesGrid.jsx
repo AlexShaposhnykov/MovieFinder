@@ -9,7 +9,7 @@ import Grid from '@material-ui/core/Grid';
 
 import * as actions from '../../../store/actions/actionsExporter';
 
-import MovieCard from '../MovieCard/MovieCard';
+import MovieCard from '../../MovieCard/MovieCard';
 
 import { getMovieGenres } from '../../../shared/utility';
 
@@ -64,10 +64,10 @@ class MoviesGrid extends Component {
               {movies.map(movieObj => (
                 <Grid item key={`${movieObj.id + 1}-${movieObj.title}`}>
                   <MovieCard
+                    movieObj={movieObj}
                     title={movieObj.title}
                     posterUrl={`http://image.tmdb.org/t/p/w342//${movieObj.poster_path}`}
                     movieId={movieObj.id}
-                    isFavorite={false}
                     genres={getMovieGenres(movieObj.genre_ids, moviesGenres)}
                   />
                 </Grid>
