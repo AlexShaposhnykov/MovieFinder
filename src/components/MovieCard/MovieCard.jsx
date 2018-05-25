@@ -3,16 +3,18 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
-
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import StarBorder from '@material-ui/icons/StarBorder';
 import Paper from '@material-ui/core/Paper';
 import Chip from '@material-ui/core/Chip';
 import Grow from '@material-ui/core/Grow';
-import Tooltip from '@material-ui/core/Tooltip';
 
-const styles = {
+import FavoritesBtn from '../FavoritesBtn/FavoritesBtn';
+
+import withFavoritesCheck from '../../hoc/withFavoritesCheck/withFavoritesCheck';
+
+const refreshPagePosition = () => window.scrollTo(0, 0);
+
+const styles = theme => ({
   movieCard: {
     height: 'auto',
     maxWidth: 600,
@@ -26,19 +28,12 @@ const styles = {
     },
   },
   movieCardSelected: {
-    border: '2px solid rgb(255, 199, 179)',
+    border: `2px solid ${theme.palette.secondary.light}`,
   },
   movieCardFooter: {
     padding: '20px',
     textAlign: 'center',
     maxWidth: '342px',
-  },
-  favouritesBtn: {
-    position: 'absolute',
-    zIndex: '20',
-    color: '#FFFFFF',
-    right: 5,
-    top: 5,
   },
   genreChip: {
     margin: 5,
@@ -47,28 +42,30 @@ const styles = {
     height: 0,
     paddingTop: '56.25%',
   },
-};
+});
 
 const MovieCard = ({
   classes,
   title,
   posterUrl,
   genres,
-  isFavorite,
   movieId,
+  isFavorite,
+  favBtnClickFunc,
 }) => (
   <Grow in>
     <Paper className={isFavorite
       ? [classes.movieCard, classes.movieCardSelected].join(' ')
       : classes.movieCard}
     >
-      <Tooltip title="To Favourites" placement="left">
-        <IconButton className={classes.favouritesBtn}>
-          <StarBorder />
-        </IconButton>
-      </Tooltip>
-      <Link to={`/${movieId}`} href style={{ textDecoration: 'none', zIndex: 10 }}>
-        <img src={posterUrl} alt={title} style={{ width: '100%' }} />
+      <FavoritesBtn isFavorite={isFavorite} clickFunc={favBtnClickFunc} />
+      <Link
+        to={`/movie/${movieId}`}
+        onClick={refreshPagePosition}
+        href
+        style={{ textDecoration: 'none', zIndex: 10 }}
+      >
+        <img src={posterUrl} alt={title} style={{ width: '100%', backgroundColor: '#eee' }} />
         <footer className={classes.movieCardFooter}>
           <Typography gutterBottom variant="headline" component="h2" noWrap>
             {title}
@@ -87,8 +84,9 @@ MovieCard.propTypes = {
   title: PropTypes.string.isRequired,
   posterUrl: PropTypes.string.isRequired,
   genres: PropTypes.arrayOf(PropTypes.string).isRequired,
-  isFavorite: PropTypes.bool.isRequired,
   movieId: PropTypes.number.isRequired,
+  isFavorite: PropTypes.bool.isRequired,
+  favBtnClickFunc: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles)(MovieCard);
+export default withFavoritesCheck(withStyles(styles)(MovieCard));

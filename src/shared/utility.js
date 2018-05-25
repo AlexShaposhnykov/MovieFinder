@@ -14,3 +14,8 @@ export const getMovieGenres = (movieGenres, genresList) => {
   }
   return genres;
 };
+
+export const isInFavorites = (favList, movieId) => (
+  favList.findIndex(favMovie => favMovie.id === movieId)
+);
+
