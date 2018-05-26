@@ -1,4 +1,4 @@
-/* eslint react/prop-types: 0 */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -121,6 +121,9 @@ const SelectedMovieCard = ({
 
 SelectedMovieCard.propTypes = {
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
+  isFavorite: PropTypes.bool.isRequired,
+  favBtnClickFunc: PropTypes.func.isRequired,
+  movieObj: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default withFavoritesCheck(withStyles(styles)(SelectedMovieCard));

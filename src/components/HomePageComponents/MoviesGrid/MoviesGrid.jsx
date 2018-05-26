@@ -5,13 +5,9 @@ import { connect } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroller';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import Grid from '@material-ui/core/Grid';
-
 import * as actions from '../../../store/actions/actionsExporter';
 
-import MovieCard from '../../MovieCard/MovieCard';
-
-import { getMovieGenres } from '../../../shared/utility';
+import MoviesGallery from '../../../hoc/MoviesGallery/MoviesGallery';
 
 class MoviesGrid extends Component {
   static propTypes = {
@@ -58,23 +54,10 @@ class MoviesGrid extends Component {
         element="div"
         loader={<CircularProgress color="secondary" key={1} />}
       >
-        <Grid container spacing={16}>
-          <Grid item xs={12}>
-            <Grid container justify="center" spacing={24}>
-              {movies.map(movieObj => (
-                <Grid item key={`${movieObj.id + 1}-${movieObj.title}`}>
-                  <MovieCard
-                    movieObj={movieObj}
-                    title={movieObj.title}
-                    posterUrl={`http://image.tmdb.org/t/p/w342//${movieObj.poster_path}`}
-                    movieId={movieObj.id}
-                    genres={getMovieGenres(movieObj.genre_ids, moviesGenres)}
-                  />
-                </Grid>
-              ))}
-            </Grid>
-          </Grid>
-        </Grid>
+        <MoviesGallery
+          moviesList={movies}
+          moviesGenres={moviesGenres}
+        />
       </InfiniteScroll>
     );
   }

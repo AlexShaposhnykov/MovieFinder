@@ -12,8 +12,8 @@ const styles = theme => ({
     position: 'absolute',
     zIndex: '20',
     color: `#${theme.palette.secondary.dark}`,
-    right: 5,
-    top: 5,
+    right: 10,
+    top: 10,
     backgroundColor: `${theme.palette.primary.main}`,
   },
 });

@@ -3,13 +3,9 @@ import PropTypes from 'prop-types';
 
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Grow from '@material-ui/core/Grow';
 
-import { getMovieGenres } from '../../../shared/utility';
-
-import MovieCard from '../../../components/MovieCard/MovieCard';
+import MoviesGallery from '../../../hoc/MoviesGallery/MoviesGallery';
 
 const styles = {
   customPaper: {
@@ -36,60 +32,30 @@ const RelMoviesCard = ({
   moviesList,
   moviesGenres,
   relatedType,
-}) => {
-  let relMoviesBody = <CircularProgress color="secondary" />;
-
-  if (!loading && moviesList.length !== 0) {
-    relMoviesBody = (
-      <Grid container spacing={16} className={classes.gridStyling}>
-        <Grid item xs={12}>
-          <Grid container justify="center" spacing={24}>
-            {moviesList.map(movieObj => (
-              <Grid item key={`${movieObj.id + 1}-${movieObj.title}`}>
-                <MovieCard
-                  movieObj={movieObj}
-                  title={movieObj.title}
-                  posterUrl={`http://image.tmdb.org/t/p/w342//${movieObj.poster_path}`}
-                  movieId={movieObj.id}
-                  genres={getMovieGenres(movieObj.genre_ids, moviesGenres)}
-                />
-              </Grid>
-            ))}
-          </Grid>
-        </Grid>
-      </Grid>
-    );
-  }
-
-  // Handle empty response
-  if (!loading && moviesList.length === 0) {
-    relMoviesBody = (
-      <Typography align="center" gutterBottom component="h2" variant="subheading">
-         Nothing was found
+}) => (
+  <Grow
+    in
+    timeout={{
+      enter: 360,
+    }}
+    mountOnEnter
+  >
+    <div className={classes.customPaper}>
+      <Typography align="center" gutterBottom component="h1" variant="headline" className={classes.paperTitle}>
+        { relatedType === 'similarMovies'
+          ? 'Similar Movies:'
+          : 'Recommended Movies:'
+        }
       </Typography>
-    );
-  }
-
-  return (
-    <Grow
-      in
-      timeout={{
-        enter: 360,
-      }}
-      mountOnEnter
-    >
-      <div className={classes.customPaper}>
-        <Typography align="center" gutterBottom component="h1" variant="headline" className={classes.paperTitle}>
-          { relatedType === 'similarMovies'
-            ? 'Similar Movies:'
-            : 'Recommended Movies:'
-          }
-        </Typography>
-        { relMoviesBody }
-      </div>
-    </Grow>
-  );
-};
+      <MoviesGallery
+        loading={loading}
+        moviesList={moviesList}
+        moviesGenres={moviesGenres}
+        gridClassName={classes.gridStyling}
+      />
+    </div>
+  </Grow>
+);
 
 RelMoviesCard.propTypes = {
   classes: PropTypes.objectOf(PropTypes.string).isRequired,

@@ -1,42 +1,26 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import Navigation from '../../components/Navigation/Navigation';
 
-export default class Layout extends Component {
-  static propTypes = {
-    children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node,
-    ]),
-  }
+const Layout = ({ children }) => (
+  <Fragment>
+    <Navigation />
+    <main style={{ paddingTop: '64px' }}>
+      {children}
+    </main>
+  </Fragment>
+);
 
-  static defaultProps = {
-    children: null,
-  }
+Layout.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
+};
 
-  state = {
-    isSearchOpen: false,
-  }
+Layout.defaultProps = {
+  children: null,
+};
 
-  handleSearchClick = () => {
-    this.setState({ isSearchOpen: !this.state.isSearchOpen });
-  }
-
-  render() {
-    const { isSearchOpen } = this.state;
-    const { children } = this.props;
-
-    return (
-      <Fragment>
-        <Navigation
-          onSearchClick={this.handleSearchClick}
-          isSearchOpen={isSearchOpen}
-        />
-        <main style={{ paddingTop: '64px' }}>
-          {children}
-        </main>
-      </Fragment>
-    );
-  }
-}
+export default Layout;

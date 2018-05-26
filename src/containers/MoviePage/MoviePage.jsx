@@ -15,15 +15,15 @@ class MoviePage extends Component {
     loading: PropTypes.bool.isRequired,
     loadingRecommended: PropTypes.bool.isRequired,
     loadingSimilar: PropTypes.bool.isRequired,
-    match: PropTypes.objectOf(PropTypes.oneOfType([
-      PropTypes.bool,
-      PropTypes.string,
-      PropTypes.object,
-    ])).isRequired,
+    match: PropTypes.PropTypes.objectOf(PropTypes.any).isRequired,
     similarMovies: PropTypes.arrayOf(PropTypes.object).isRequired,
     moviesGenres: PropTypes.arrayOf(PropTypes.object).isRequired,
     recommendedMovies: PropTypes.arrayOf(PropTypes.object).isRequired,
     initSelectedMovieFetch: PropTypes.func.isRequired,
+    selectedMovie: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.any),
+      PropTypes.objectOf(PropTypes.any),
+    ]).isRequired,
   }
 
   state = {
@@ -43,7 +43,7 @@ class MoviePage extends Component {
     return null;
   }
 
-  // Update data on movie id change
+  // Update data on movie id(URL) change
   componentDidUpdate = (_, prevState) => {
     if (prevState.lastMovie !== this.state.lastMovie) {
       this.props.initSelectedMovieFetch(this.state.lastMovie);

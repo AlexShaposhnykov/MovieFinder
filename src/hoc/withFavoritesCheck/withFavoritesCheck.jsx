@@ -1,4 +1,4 @@
-/* eslint react/prop-types: 0 */
+
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -11,9 +11,10 @@ const withFavoritesCheck = (WrappedComponent) => {
   class WithFavoritesCheck extends Component {
     static propTypes = {
       movieId: PropTypes.number.isRequired,
-      isFavorite: PropTypes.bool.isRequired,
       onDeleteFromFavorites: PropTypes.func.isRequired,
       onAddToFavorites: PropTypes.func.isRequired,
+      favMovies: PropTypes.arrayOf(PropTypes.any).isRequired,
+      movieObj: PropTypes.objectOf(PropTypes.any).isRequired,
     }
 
     state = {
