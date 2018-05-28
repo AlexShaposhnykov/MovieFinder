@@ -13,7 +13,7 @@ const initialState = {
 
 /**
 |--------------------------------------------------
-| Selected movie section
+| Selected movie actions
 |--------------------------------------------------
 */
 const initSelectedMovieFetch = state => updateObject(state, {
@@ -35,7 +35,7 @@ const selectedMovieFetchFail = (state, action) => updateObject(state, {
 });
 /**
 |--------------------------------------------------
-| Similar movies section
+| Similar movies actions
 |--------------------------------------------------
 */
 const initSimilarMoviesFetch = state => updateObject(state, {
@@ -55,7 +55,7 @@ const similarMoviesFetchFail = state => updateObject(state, {
 });
 /**
 |--------------------------------------------------
-| Recommended movies section
+| Recommended movies actions
 |--------------------------------------------------
 */
 const initRecommendedMoviesFetch = state => updateObject(state, {

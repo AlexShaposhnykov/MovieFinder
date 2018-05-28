@@ -21,6 +21,16 @@ const styles = theme => ({
   movieDescWrapper: {
     backgroundColor: '#212121',
   },
+  movieUserScore: {
+    color: `${theme.palette.primary.contrastText}`,
+    marginTop: 20,
+    '& > span': {
+      border: `2px solid ${theme.palette.secondary.main}`,
+      padding: '1px 10px',
+      borderRadius: 30,
+      color: `${theme.palette.secondary.main}`,
+    },
+  },
   moviePosterWrapper: {
     backgroundColor: 'white',
   },
@@ -42,6 +52,10 @@ const styles = theme => ({
   },
   movieTitle: {
     color: `${theme.palette.primary.contrastText}`,
+    '& > span': {
+      marginLeft: 5,
+      color: '#ababab',
+    },
   },
   movieTagline: {
     borderLeft: '2px solid #eee',
@@ -100,9 +114,15 @@ const SelectedMovieCard = ({
         <Grid item xl={8} lg={8} md={8} sm={7} xs={12} className={classes.movieDescWrapper}>
           <Typography align="left" component="h1" variant="headline" gutterBottom className={classes.movieTitle}>
             {movieObj.title}
+            <span>
+              ({movieObj.release_date.split('-')[0]})
+            </span>
           </Typography>
           <Typography component="h3" variant="subheading" gutterBottom className={classes.movieTagline}>
             {movieObj.tagline}
+          </Typography>
+          <Typography component="p" variant="subheading" className={classes.movieUserScore}>
+            User Score: <span>{movieObj.vote_average}</span>
           </Typography>
           <Typography component="p" className={classes.movieDesc}>
             {movieObj.overview}

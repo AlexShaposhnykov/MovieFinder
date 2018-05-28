@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import CircularProgress from '@material-ui/core/CircularProgress';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 import SelectedMovieCard from '../../components/MoviePageComponents/SelectedMovieCard/SelectedMovieCard';
 
@@ -61,7 +61,7 @@ class MoviePage extends Component {
       moviesGenres,
     } = this.props;
 
-    let selectedMovieCard = <CircularProgress color="primary" />;
+    let selectedMovieCard = <LinearProgress color="secondary" />;
     if (!loading && !Array.isArray(selectedMovie)) {
       selectedMovieCard = (
         <SelectedMovieCard

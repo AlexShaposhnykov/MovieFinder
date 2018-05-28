@@ -14,7 +14,11 @@ const initialState = {
 const incrementPageNum = state => updateObject(state, {
   curPage: state.curPage + 1,
 });
-
+/**
+|--------------------------------------------------
+| Movies actions
+|--------------------------------------------------
+*/
 const initMoviesFetch = state => updateObject(state, {
   loading: true,
   error: false,
@@ -30,7 +34,11 @@ const moviesFetchFail = state => updateObject(state, {
   loading: false,
   error: true,
 });
-
+/**
+|--------------------------------------------------
+| Movies genres actions
+|--------------------------------------------------
+*/
 const initMoviesGenresFetch = state => updateObject(state, {
   loadingGenres: true,
 });

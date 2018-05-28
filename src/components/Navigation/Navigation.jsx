@@ -52,7 +52,7 @@ class Navigation extends Component {
     this.setState({ isSearchOpen: !this.state.isSearchOpen });
   }
 
-  handleBackdropClick = () => {
+  handleOutsideClick = () => {
     this.setState({ isSearchOpen: false });
   }
 
@@ -85,11 +85,11 @@ class Navigation extends Component {
               <Search />
             </IconButton>
           </Toolbar>
-          <SearchBar isOpen={isSearchOpen} />
+          <SearchBar isOpen={isSearchOpen} closeSearch={this.handleSearchClick} />
           { isSearchOpen
             && <Backdrop
               open={isSearchOpen}
-              onClick={this.handleBackdropClick}
+              onClick={this.handleOutsideClick}
             />
           }
         </AppBar>

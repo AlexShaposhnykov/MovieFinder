@@ -13,6 +13,7 @@ import { asyncLocalStorage } from 'redux-persist/storages';
 import HomePageReducer from './store/reducers/HomePage';
 import MoviePageReducer from './store/reducers/MoviePage';
 import FavoritesReducer from './store/reducers/Favorites';
+import SearchReducer from './store/reducers/Search';
 
 import Root from './root';
 
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   Home: HomePageReducer,
   MoviePage: MoviePageReducer,
   Favorites: FavoritesReducer,
+  Search: SearchReducer,
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

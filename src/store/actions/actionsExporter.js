@@ -11,3 +11,7 @@ export {
   addToStorage,
   deleteFromStorage,
 } from './Favorites';
+
+export {
+  requestSearchResults,
+} from './Search';

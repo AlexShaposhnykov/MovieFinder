@@ -36,3 +36,10 @@ export const SIMILAR_MOVIES_FETCH_FAIL = 'SIMILAR_MOVIES_FETCH_FAIL';
 export const ADD_TO_STORAGE = 'ADD_TO_STORAGE';
 export const DELETE_FROM_STORAGE = 'DELETE_FROM_STORAGE';
 export const SYNC_STORAGE = 'SYNC_STORAGE';
+/**
+|--------------------------------------------------
+| Search bar action types
+|--------------------------------------------------
+*/
+export const REQUEST_SEARCH_RESULTS = 'REQUEST_SEARCH_RESULTS';
+export const SET_SEARCH_RESULTS = 'SET_SEARCH_RESULTS';

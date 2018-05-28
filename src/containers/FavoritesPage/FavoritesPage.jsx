@@ -29,6 +29,9 @@ const styles = theme => ({
     left: '50%',
     boxShadow: '0px 1px 1px rgba(0, 0, 0, 0.25)',
     transform: 'translate(-50%, -50%)',
+    '@media (max-width: 550px)': {
+      width: '95%',
+    },
   },
   favoritesShowcaseWell: {
     padding: '90px 15px',
@@ -68,7 +71,7 @@ class FavoritesPage extends Component {
       <Fragment>
         <div className={classes.headingWrapper}>
           <Fade in>
-            <Typography color="primary" align="center" variant="headline" className={classes.heading}>
+            <Typography color="primary" align="center" variant="headline" className={classes.heading} noWrap>
               Favorite Movies
             </Typography>
           </Fade>
