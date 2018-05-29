@@ -3,7 +3,7 @@ import React from 'react';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Switch, Route } from 'react-router';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Redirect } from 'react-router-dom';
 
 import Layout from './hoc/Layout/Layout';
 import HomePage from './containers/HomePage/HomePage';
@@ -48,6 +48,7 @@ const Root = () => (
             path="/"
             component={HomePage}
           />
+          <Redirect to="/" />
         </Switch>
       </Layout>
     </BrowserRouter>

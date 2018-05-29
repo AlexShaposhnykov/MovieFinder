@@ -16,6 +16,11 @@ import SearchSuggestion from './SearchSuggestion/SearchSuggestion';
 import { getMovieGenres } from '../../../shared/utility';
 
 const styles = theme => ({
+  searchWrapper: {
+    padding: 20,
+    textAlign: 'center',
+    backgroundColor: 'rgb(255, 199, 179)',
+  },
   inputStyles: {
     backgroundColor: 'white',
     borderRadius: '100px',
@@ -67,7 +72,7 @@ class SearchBar extends Component {
 
   getSnapshotBeforeUpdate = () => {
     this.searchStartTimer = null;
-    return this.searchStartTimer;
+    return null;
   }
 
   componentDidUpdate = () => {
@@ -88,7 +93,7 @@ class SearchBar extends Component {
     if (e.keyCode === ENTER_KEYCODE && searchResults.length) {
       this.setState({
         searchInputValue: '',
-        selectedItem: searchResults[0],
+        selectedItem: [searchResults[0]],
       });
 
       this.props.history.push(`/movie/${searchResults[0].id}`);
@@ -138,28 +143,19 @@ class SearchBar extends Component {
             onChange={this.handleChange}
             itemToString={item => (item ? item.title : '')}
           >
-            {({ getItemProps, getInputProps }) => (
-              <form
-                noValidate
-                onSubmit={e => e.preventDefault()}
-                style={{
-                  padding: 20,
-                  textAlign: 'center',
-                  backgroundColor: 'rgb(255, 199, 179)',
-                }}
-              >
+            {({ getItemProps }) => (
+              <div className={classes.searchWrapper}>
                 <TextField
-                  {...getInputProps()}
                   type="search"
                   InputLabelProps={{
                     shrink: true,
                   }}
-                  autoFocus
                   onChange={e => this.handleUserInput(e)}
                   onKeyDown={e => this.handleEnterPress(e)}
                   placeholder="Search movies..."
                   value={searchInputValue}
                   margin="none"
+                  autoFocus
                   InputProps={{
                     className: classes.inputStyles,
                     disableUnderline: true,
@@ -185,7 +181,7 @@ class SearchBar extends Component {
                     ))}
                   </Paper>
                 ) : null}
-              </form>
+              </div>
             )}
           </Downshift>
         </Collapse>

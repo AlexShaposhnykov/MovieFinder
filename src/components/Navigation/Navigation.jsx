@@ -36,6 +36,32 @@ const styles = theme => ({
     marginRight: -12,
     color: `${theme.palette.secondary.light}`,
   },
+  HomeHeading: {
+    overflow: 'hidden',
+    position: 'relative',
+  },
+  HomeLink: {
+    color: 'inherit',
+    textDecoration: 'none',
+    transition: 'all .2s ease',
+    '&:hover': {
+      color: `${theme.palette.secondary.main}`,
+      '&::before': {
+        transform: 'translateY(0%)',
+      },
+    },
+    '&::before': {
+      content: '"Home"',
+      width: '100%',
+      textAlign: 'center',
+      backgroundColor: `${theme.palette.primary.main}`,
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      transform: 'translateY(100%)',
+      transition: 'all .3s cubic-bezier(0.36, 0.35, 0, 0.97)',
+    },
+  },
 });
 
 class Navigation extends Component {
@@ -73,8 +99,10 @@ class Navigation extends Component {
                 </IconButton>
               </Tooltip>
             </Link>
-            <Typography variant="title" color="inherit">
-              MoviePicker
+            <Typography variant="title" color="inherit" className={classes.HomeHeading}>
+              <Link to="/" href className={classes.HomeLink}>
+                MoviePicker
+              </Link>
             </Typography>
             <IconButton
               color="inherit"
