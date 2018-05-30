@@ -2,6 +2,7 @@
   "name": "movie-finder",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://AlexSh6789.github.io/MovieFinder",
   "dependencies": {
     "@material-ui/core": "^1.0.0",
     "@material-ui/icons": "^1.0.0",
@@ -22,6 +23,8 @@
     "redux-thunk": "^2.2.0"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "build-css": "node-sass-chokidar src/ -o src/",
@@ -33,6 +36,7 @@
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.12.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-react": "^7.8.2"
+    "eslint-plugin-react": "^7.8.2",
+    "gh-pages": "^1.1.0"
   }
 }

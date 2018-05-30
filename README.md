@@ -1,5 +1,6 @@
 # MovieFinder
-
+Small app built with The Movie Database API
+* [Live version](http://alexsh6789.github.io/MovieFinder)
 ### Installing
 ```
 npm install
