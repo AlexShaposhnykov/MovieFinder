@@ -1,7 +1,7 @@
 import * as actionTypes from './actionTypes';
-import axiosInstance from '../../axiosInstance';
 
-import { API_KEY } from '../../shared/const';
+import { API_KEY, API_URL } from '../../shared/const';
+import { fetcher } from '../../shared/utility';
 
 export const setMovies = movies => ({
   type: actionTypes.SET_MOVIES,
@@ -26,16 +26,18 @@ export const initMoviesGenresFetch = () => (dispatch, getState) => {
   }
 
   dispatch({ type: actionTypes.INIT_MOVIES_GENRES_FETCH });
-  return axiosInstance.get(`/genre/movie/list${API_KEY}`)
-    .then(response => dispatch(setMoviesGenres(response.data)))
-    .catch(() => dispatch(moviesFetchFail()));
+
+  return fetcher(`${API_URL}/genre/movie/list${API_KEY}`)
+    .then(response => dispatch(setMoviesGenres(response)))
+    .catch(err => dispatch(moviesFetchFail(err)));
 };
 
 export const initMoviesFetch = curPage => (dispatch) => {
   dispatch(initMoviesGenresFetch());
   dispatch({ type: actionTypes.INIT_MOVIES_FETCH });
   dispatch({ type: actionTypes.INCREMENT_PAGENUM });
-  return axiosInstance.get(`/movie/popular${API_KEY}&language=en-US&page=${curPage}`)
-    .then(response => dispatch(setMovies(response.data)))
+
+  return fetcher(`${API_URL}/movie/popular${API_KEY}&language=en-US&page=${curPage}`)
+    .then(response => dispatch(setMovies(response)))
     .catch(() => dispatch(moviesFetchFail()));
 };
