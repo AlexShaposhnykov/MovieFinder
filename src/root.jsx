@@ -10,6 +10,8 @@ import HomePage from './containers/HomePage/HomePage';
 import MoviePage from './containers/MoviePage/MoviePage';
 import FavoritesPage from './containers/FavoritesPage/FavoritesPage';
 
+import WithGlobalContext from './hoc/GlobalContext/WithGlobalContext';
+
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -31,28 +33,30 @@ const theme = createMuiTheme({
 });
 
 const Root = () => (
-  <MuiThemeProvider theme={theme}>
-    <CssBaseline />
-    <BrowserRouter>
-      <Layout>
-        <Switch>
-          <Route
-            path="/movie/:id"
-            component={MoviePage}
-          />
-          <Route
-            path="/favorites"
-            component={FavoritesPage}
-          />
-          <Route
-            path="/"
-            component={HomePage}
-          />
-          <Redirect to="/" />
-        </Switch>
-      </Layout>
-    </BrowserRouter>
-  </MuiThemeProvider>
+  <WithGlobalContext>
+    <MuiThemeProvider theme={theme}>
+      <CssBaseline />
+      <BrowserRouter>
+        <Layout>
+          <Switch>
+            <Route
+              path="/movie/:id"
+              component={MoviePage}
+            />
+            <Route
+              path="/favorites"
+              component={FavoritesPage}
+            />
+            <Route
+              path="/"
+              component={HomePage}
+            />
+            <Redirect to="/" />
+          </Switch>
+        </Layout>
+      </BrowserRouter>
+    </MuiThemeProvider>
+  </WithGlobalContext>
 );
 
 export default Root;

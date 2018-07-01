@@ -1,7 +1,7 @@
 export {
   initMoviesFetch,
   initMoviesGenresFetch,
-} from './HomePage';
+} from '../newMovies/actions';
 
 export {
   initSelectedMovieFetch,

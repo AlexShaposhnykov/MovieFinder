@@ -1,50 +1,54 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 
 import InfiniteScroll from 'react-infinite-scroller';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import * as actions from '../../../store/actions/actionsExporter';
+import { initMoviesFetch } from '../../../store/newMovies/actions';
 
 import MoviesGallery from '../../../hoc/MoviesGallery/MoviesGallery';
 
+import withContextPortal from '../../../hoc/GlobalContext/withContextPortal';
+
 class MoviesGrid extends Component {
   static propTypes = {
-    movies: PropTypes.arrayOf(PropTypes.object).isRequired,
-    moviesGenres: PropTypes.arrayOf(PropTypes.object).isRequired,
-    loading: PropTypes.bool.isRequired,
-    loadingGenres: PropTypes.bool.isRequired,
-    initMoviesFetch: PropTypes.func.isRequired,
-    lastPage: PropTypes.number,
-    curPage: PropTypes.number.isRequired,
-  }
-
-  static defaultProps = {
-    lastPage: null,
+    context: PropTypes.objectOf(PropTypes.any).isRequired,
   }
 
   state = {
     hasMorePages: true,
   }
 
+  componentDidMount = () => {
+    console.log(this.props.context.NewMovies);
+  }
+
   handleMoviesLoad = () => {
-    if (!this.props.loading && !this.props.loadingGenres) {
-      this.props.initMoviesFetch(this.props.curPage);
+    const { dispatch, NewMovies } = this.props.context;
+    const { loading, loadingGenres } = NewMovies;
+
+    if (!loading && !loadingGenres) {
+      dispatch(initMoviesFetch);
+      console.log('handleMoviesLoad', NewMovies);
     }
   }
 
   checkMoviesPages = () => {
-    this.setState({ hasMorePages: (this.props.curPage + 1 <= this.props.lastPage) });
+    const { NewMovies } = this.props.context;
+    const { curPage, lastPage } = NewMovies;
+
+    this.setState({ hasMorePages: (curPage + 1 <= lastPage) });
   }
 
   render() {
     const { hasMorePages } = this.state;
+    const { NewMovies } = this.props.context;
     const {
-      movies,
+      popularMovies,
       moviesGenres,
       curPage,
-    } = this.props;
+    } = NewMovies;
+    // console.log('Movies Grid', moviesGenres);
 
     return (
       <InfiniteScroll
@@ -55,7 +59,7 @@ class MoviesGrid extends Component {
         loader={<CircularProgress color="secondary" key={1} />}
       >
         <MoviesGallery
-          moviesList={movies}
+          moviesList={popularMovies}
           moviesGenres={moviesGenres}
         />
       </InfiniteScroll>
@@ -63,17 +67,4 @@ class MoviesGrid extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  movies: state.Home.popularMovies,
-  moviesGenres: state.Home.moviesGenres,
-  loading: state.Home.loading,
-  loadingGenres: state.Home.loadingGenres,
-  lastPage: state.Home.lastPage,
-  curPage: state.Home.curPage,
-});
-
-const mapDispatchToProps = dispatch => ({
-  initMoviesFetch: pageNum => dispatch(actions.initMoviesFetch(pageNum)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(MoviesGrid);
+export default withContextPortal(MoviesGrid);

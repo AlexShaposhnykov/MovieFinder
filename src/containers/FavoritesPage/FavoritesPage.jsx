@@ -7,7 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import MoviesGallery from '../../hoc/MoviesGallery/MoviesGallery';
 
-import { initMoviesGenresFetch } from '../../store/actions/HomePage';
+// import { initMoviesGenresFetch } from '../../store/newMovies/actions';
 
 const styles = theme => ({
   headingWrapper: {
@@ -87,7 +87,7 @@ class FavoritesPage extends Component {
     );
   }
 }
-
+/*
 const mapStateToProps = state => ({
   favMovies: state.Favorites.favMovies,
   moviesGenres: state.Home.moviesGenres,
@@ -97,5 +97,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   onFavoritesLoad: () => dispatch(initMoviesGenresFetch()),
 });
+*/
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(FavoritesPage));
+export default withStyles(styles)(FavoritesPage);

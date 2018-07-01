@@ -1,7 +1,7 @@
 import 'whatwg-fetch';
 
-export const updateObject = (oldObj, newProperties) => ({
-  ...oldObj,
+export const updateObject = (oldStore, newProperties) => ({
+  ...oldStore,
   ...newProperties,
 });
 

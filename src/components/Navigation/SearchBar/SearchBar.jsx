@@ -192,7 +192,7 @@ class SearchBar extends Component {
 
 const mapStateToProps = state => ({
   searchResults: state.Search.searchResults,
-  moviesGenres: state.Home.moviesGenres,
+  // moviesGenres: state.Home.moviesGenres,
   loading: state.Search.loadingSearchResults,
 });
 

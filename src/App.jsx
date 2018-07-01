@@ -10,7 +10,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { persistStore, autoRehydrate } from 'redux-persist';
 import { asyncLocalStorage } from 'redux-persist/storages';
 
-import HomePageReducer from './store/reducers/HomePage';
 import MoviePageReducer from './store/reducers/MoviePage';
 import FavoritesReducer from './store/reducers/Favorites';
 import SearchReducer from './store/reducers/Search';
@@ -18,7 +17,6 @@ import SearchReducer from './store/reducers/Search';
 import Root from './root';
 
 const rootReducer = combineReducers({
-  Home: HomePageReducer,
   MoviePage: MoviePageReducer,
   Favorites: FavoritesReducer,
   Search: SearchReducer,

@@ -5,20 +5,18 @@ const initialState = {
   favMovies: [],
 };
 
-const addToStorage = (state, action) => updateObject(state, {
-  type: actionTypes.ADD_TO_STORAGE,
-  favMovies: [...state.favMovies, action.movie],
-});
-
-const deleteFromStorage = (state, action) => updateObject(state, {
-  type: actionTypes.DELETE_FROM_STORAGE,
-  favMovies: state.favMovies.filter(movie => movie.id !== action.movieId),
-});
-
 const FavoritesReducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.ADD_TO_STORAGE: return addToStorage(state, action);
-    case actionTypes.DELETE_FROM_STORAGE: return deleteFromStorage(state, action);
+    case actionTypes.ADD_TO_STORAGE:
+      return updateObject(state, {
+        type: actionTypes.DELETE_FROM_STORAGE,
+        favMovies: state.favMovies.filter(movie => movie.id !== action.movieId),
+      });
+    case actionTypes.DELETE_FROM_STORAGE:
+      return updateObject(state, {
+        type: actionTypes.DELETE_FROM_STORAGE,
+        favMovies: state.favMovies.filter(movie => movie.id !== action.movieId),
+      });
     default: return state;
   }
 };
