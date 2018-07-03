@@ -23,7 +23,11 @@ class WithGlobalContext extends Component {
       curPage: 1,
       error: false,
     },
-    dispatch: (action) => action(this.state),
+    Search: {
+      searchResults: [],
+      loadingSearchResults: false,
+    },
+    dispatch: (action, ...funcParams) => action(this.state, funcParams),
     update: (contextPath, pendingsContextUpdate) => {
       this.setState(state => ({
         ...state,

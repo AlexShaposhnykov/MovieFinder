@@ -14,4 +14,4 @@ export {
 
 export {
   requestSearchResults,
-} from './Search';
+} from '../search/actions';

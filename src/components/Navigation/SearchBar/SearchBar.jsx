@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-no-duplicate-props */
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -11,7 +10,9 @@ import Paper from '@material-ui/core/Paper';
 import Downshift from 'downshift';
 
 import { requestSearchResults } from '../../../store/actions/actionsExporter';
-import SearchSuggestion from './SearchSuggestion/SearchSuggestion';
+import SearchSuggestion from './SearchSuggestion';
+
+import withContextPortal from '../../../hoc/GlobalContext/withContextPortal';
 
 import { getMovieGenres } from '../../../shared/utility';
 
@@ -58,11 +59,10 @@ class SearchBar extends Component {
   static propTypes = {
     isOpen: PropTypes.bool.isRequired,
     classes: PropTypes.objectOf(PropTypes.string).isRequired,
-    onSearchStart: PropTypes.func.isRequired,
-    moviesGenres: PropTypes.arrayOf(PropTypes.object).isRequired,
     searchResults: PropTypes.arrayOf(PropTypes.object).isRequired,
     closeSearch: PropTypes.func.isRequired,
     history: PropTypes.PropTypes.objectOf(PropTypes.any).isRequired,
+    context: PropTypes.objectOf(PropTypes.any).isRequired,
   }
 
   state = {
@@ -88,22 +88,25 @@ class SearchBar extends Component {
   }
 
   handleEnterPress = (e) => {
-    const { searchResults } = this.props;
+    const { Search } = this.props.context;
 
-    if (e.keyCode === ENTER_KEYCODE && searchResults.length) {
+    if (e.keyCode === ENTER_KEYCODE && Search.searchResults.length) {
       this.setState({
         searchInputValue: '',
-        selectedItem: [searchResults[0]],
+        selectedItem: [Search.searchResults[0]],
       });
 
-      this.props.history.push(`/movie/${searchResults[0].id}`);
+      this.props.history.push(`/movie/${Search.searchResults[0].id}`);
       this.props.closeSearch();
     }
   }
 
   initSearch = () => {
+    const { dispatch } = this.props.context;
+    const { searchInputValue } = this.state;
+
     if (this.state.searchInputValue !== '') {
-      this.props.onSearchStart(this.state.searchInputValue);
+      dispatch(requestSearchResults, (searchInputValue));
     }
   }
 
@@ -124,12 +127,8 @@ class SearchBar extends Component {
 
   render() {
     const { searchInputValue } = this.state;
-    const {
-      classes,
-      isOpen,
-      searchResults,
-      moviesGenres,
-    } = this.props;
+    const { classes, isOpen } = this.props;
+    const { NewMovies, Search } = this.props.context;
 
     return (
       <Fragment>
@@ -166,16 +165,16 @@ class SearchBar extends Component {
                   inputRef={(el) => { this.searchInput = el; }}
                   className={classes.inputWrapperStyles}
                 />
-                {(isOpen && searchInputValue.length && searchResults.length) ? (
+                {(isOpen && searchInputValue.length && Search.searchResults.length) ? (
                   <Paper elevation={6} className={classes.suggestionsBox}>
-                    {searchResults.slice(0, 6).map(item => (
+                    {Search.searchResults.slice(0, 6).map(item => (
                       <SearchSuggestion
                         itemProps={getItemProps({ item })}
                         key={`${item.id}-searchResult`}
                         movieObj={item}
                         genres={getMovieGenres(
                           (item.genre_ids || item.genres),
-                          moviesGenres,
+                          NewMovies.moviesGenres,
                         )}
                       />
                     ))}
@@ -190,14 +189,4 @@ class SearchBar extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  searchResults: state.Search.searchResults,
-  // moviesGenres: state.Home.moviesGenres,
-  loading: state.Search.loadingSearchResults,
-});
-
-const mapDispatchToProps = dispatch => ({
-  onSearchStart: searchInputValue => dispatch(requestSearchResults(searchInputValue)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(withStyles(styles)(SearchBar)));
+export default withContextPortal(withRouter(withStyles(styles)(SearchBar)));
