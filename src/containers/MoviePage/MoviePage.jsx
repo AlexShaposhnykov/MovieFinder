@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 
 import LinearProgress from '@material-ui/core/LinearProgress';
 
@@ -8,22 +7,14 @@ import SelectedMovieCard from '../../components/MoviePageComponents/SelectedMovi
 
 import RelMoviesCard from '../../components/MoviePageComponents/RelatedMoviesCard/RelMoviesCard';
 
-import * as actions from '../../store/actions/actionsExporter';
+import withContextPortal from '../../hoc/GlobalContext/withContextPortal';
+
+import { initSelectedMovieFetch } from '../../store/selectedMovie/actions';
 
 class MoviePage extends Component {
   static propTypes = {
-    loading: PropTypes.bool.isRequired,
-    loadingRecommended: PropTypes.bool.isRequired,
-    loadingSimilar: PropTypes.bool.isRequired,
     match: PropTypes.PropTypes.objectOf(PropTypes.any).isRequired,
-    similarMovies: PropTypes.arrayOf(PropTypes.object).isRequired,
-    moviesGenres: PropTypes.arrayOf(PropTypes.object).isRequired,
-    recommendedMovies: PropTypes.arrayOf(PropTypes.object).isRequired,
-    initSelectedMovieFetch: PropTypes.func.isRequired,
-    selectedMovie: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.any),
-      PropTypes.objectOf(PropTypes.any),
-    ]).isRequired,
+    context: PropTypes.objectOf(PropTypes.any).isRequired,
   }
 
   state = {
@@ -31,7 +22,10 @@ class MoviePage extends Component {
   }
 
   componentDidMount = () => {
-    this.props.initSelectedMovieFetch(this.state.lastMovie);
+    const { lastMovie } = this.state;
+    const { dispatch } = this.props.context;
+
+    dispatch(initSelectedMovieFetch, (lastMovie));
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -45,21 +39,25 @@ class MoviePage extends Component {
 
   // Update data on movie id(URL) change
   componentDidUpdate = (_, prevState) => {
-    if (prevState.lastMovie !== this.state.lastMovie) {
-      this.props.initSelectedMovieFetch(this.state.lastMovie);
+    const { lastMovie } = this.state;
+    const { dispatch } = this.props.context;
+
+    if (prevState.lastMovie !== lastMovie) {
+      dispatch(initSelectedMovieFetch, (lastMovie));
     }
   }
 
   render() {
+    const { NewMovies, SelectedMovie } = this.props.context;
+    const { moviesGenres } = NewMovies;
     const {
-      loading,
       selectedMovie,
+      loading,
       loadingRecommended,
       recommendedMovies,
       loadingSimilar,
       similarMovies,
-      moviesGenres,
-    } = this.props;
+    } = SelectedMovie;
 
     let selectedMovieCard = <LinearProgress color="secondary" />;
     if (!loading && !Array.isArray(selectedMovie)) {
@@ -91,21 +89,4 @@ class MoviePage extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  selectedMovie: state.MoviePage.selectedMovie,
-  moviesGenres: state.Home.moviesGenres,
-  loading: state.MoviePage.loading,
-  loadingRecommended: state.MoviePage.loadingRecommended,
-  recommendedMovies: state.MoviePage.recommendedMovies,
-  loadingSimilar: state.MoviePage.loadingSimilar,
-  similarMovies: state.MoviePage.similarMovies,
-  loadingGenres: state.Home.loadingGenres,
-  error: state.MoviePage.error,
-  initSelectedMovieFetch: PropTypes.func.isRequired,
-});
-
-const mapDispatchToProps = dispatch => ({
-  initSelectedMovieFetch: movieId => dispatch(actions.initSelectedMovieFetch(movieId)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(MoviePage);
+export default withContextPortal(MoviePage);

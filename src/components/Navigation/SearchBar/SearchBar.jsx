@@ -59,7 +59,6 @@ class SearchBar extends Component {
   static propTypes = {
     isOpen: PropTypes.bool.isRequired,
     classes: PropTypes.objectOf(PropTypes.string).isRequired,
-    searchResults: PropTypes.arrayOf(PropTypes.object).isRequired,
     closeSearch: PropTypes.func.isRequired,
     history: PropTypes.PropTypes.objectOf(PropTypes.any).isRequired,
     context: PropTypes.objectOf(PropTypes.any).isRequired,

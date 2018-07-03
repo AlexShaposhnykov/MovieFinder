@@ -5,7 +5,7 @@ export {
 
 export {
   initSelectedMovieFetch,
-} from './MoviePage';
+} from '../selectedMovie/actions';
 
 export {
   addToStorage,

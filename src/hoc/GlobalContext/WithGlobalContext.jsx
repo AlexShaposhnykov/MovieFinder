@@ -5,7 +5,7 @@ export const Context = createContext();
 
 class WithGlobalContext extends Component {
   state = {
-    SingleMoviePage: {
+    SelectedMovie: {
       loading: false,
       loadingRecommended: false,
       loadingSimilar: false,
