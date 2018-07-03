@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 
 import { Link } from 'react-router-dom';
 
@@ -17,6 +16,8 @@ import StarBorder from '@material-ui/icons/StarBorder';
 import Search from '@material-ui/icons/Search';
 
 import SearchBar from './SearchBar/SearchBar';
+
+import withContextPortal from '../../hoc/GlobalContext/withContextPortal';
 
 const styles = theme => ({
   toolbar: {
@@ -67,7 +68,7 @@ const styles = theme => ({
 class Navigation extends Component {
   static propTypes = {
     classes: PropTypes.objectOf(PropTypes.string.isRequired).isRequired,
-    favMoviesLength: PropTypes.number.isRequired,
+    context: PropTypes.objectOf(PropTypes.any).isRequired,
   }
 
   state = {
@@ -84,7 +85,10 @@ class Navigation extends Component {
 
   render() {
     const { isSearchOpen } = this.state;
-    const { classes, favMoviesLength } = this.props;
+    const { classes } = this.props;
+    const { Favorites } = this.props.context;
+
+    const favMoviesLength = Favorites.favMovies.length;
 
     return (
       <Fragment>
@@ -126,8 +130,4 @@ class Navigation extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  favMoviesLength: state.Favorites.favMovies.length,
-});
-
-export default connect(mapStateToProps, null)(withStyles(styles)(Navigation));
+export default withContextPortal(withStyles(styles)(Navigation));

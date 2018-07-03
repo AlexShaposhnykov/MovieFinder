@@ -1,13 +1,12 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 
 import Fade from '@material-ui/core/Fade';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import MoviesGallery from '../../hoc/MoviesGallery/MoviesGallery';
 
-// import { initMoviesGenresFetch } from '../../store/newMovies/actions';
+import { initMoviesGenresFetch } from '../../store/newMovies/actions';
 
 const styles = theme => ({
   headingWrapper: {
@@ -44,17 +43,18 @@ const styles = theme => ({
 class FavoritesPage extends Component {
   static propTypes = {
     classes: PropTypes.objectOf(PropTypes.string).isRequired,
-    onFavoritesLoad: PropTypes.func.isRequired,
     loading: PropTypes.bool.isRequired,
     moviesGenres: PropTypes.arrayOf(PropTypes.any).isRequired,
     favMovies: PropTypes.arrayOf(PropTypes.any).isRequired,
+    context: PropTypes.objectOf(PropTypes.any).isRequired,
   }
 
   componentDidMount = () => {
-    const { moviesGenres, onFavoritesLoad } = this.props;
+    const { NewMovies, Favorites, dispatch } = this.props.context;
+    const { moviesGenres } = NewMovies;
 
     if (moviesGenres.length === 0) {
-      onFavoritesLoad();
+      dispatch(onFavoritesLoad());
     }
     window.scrollTo(0, 0);
   }
