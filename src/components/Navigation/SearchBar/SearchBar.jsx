@@ -9,7 +9,7 @@ import Collapse from '@material-ui/core/Collapse';
 import Paper from '@material-ui/core/Paper';
 import Downshift from 'downshift';
 
-import { requestSearchResults } from '../../../store/actions/actionsExporter';
+import { requestSearchResults } from '../../../store/search/actions';
 import SearchSuggestion from './SearchSuggestion';
 
 import withContextPortal from '../../../hoc/GlobalContext/withContextPortal';

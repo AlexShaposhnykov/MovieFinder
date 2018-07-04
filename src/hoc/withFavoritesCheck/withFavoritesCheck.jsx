@@ -1,20 +1,18 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 
-import { addToStorage, deleteFromStorage } from '../../store/actions/actionsExporter';
+import withContextPortal from './../GlobalContext/withContextPortal';
 
 import { isInFavorites } from '../../shared/utility';
+import { addToStorage, deleteFromStorage } from '../../store/favorites/actions';
 
 const withFavoritesCheck = (WrappedComponent) => {
   class WithFavoritesCheck extends Component {
     static propTypes = {
       movieId: PropTypes.number.isRequired,
-      onDeleteFromFavorites: PropTypes.func.isRequired,
-      onAddToFavorites: PropTypes.func.isRequired,
-      favMovies: PropTypes.arrayOf(PropTypes.any).isRequired,
       movieObj: PropTypes.objectOf(PropTypes.any).isRequired,
+      context: PropTypes.objectOf(PropTypes.any).isRequired,
     }
 
     state = {
@@ -22,25 +20,24 @@ const withFavoritesCheck = (WrappedComponent) => {
     }
 
     componentDidMount = () => {
-      if (isInFavorites(this.props.favMovies, this.props.movieId) !== -1) {
+      const { Favorites } = this.props.context;
+      const { favMovies } = Favorites;
+
+      if (isInFavorites(favMovies, this.props.movieId) !== -1) {
         this.setState({ isFavorite: true });
       }
     }
 
     toggleFavoriteBtn = () => {
       const { isFavorite } = this.state;
-      const {
-        movieObj,
-        movieId,
-        onAddToFavorites,
-        onDeleteFromFavorites,
-      } = this.props;
-
+      const { movieObj, movieId } = this.props;
+      const { dispatch } = this.props.context;
+        
       if (!isFavorite) {
-        onAddToFavorites(movieObj);
+        dispatch(addToStorage, (movieObj));
         this.setState(({ isFavorite: !isFavorite }));
       } else {
-        onDeleteFromFavorites(movieId);
+        dispatch(deleteFromStorage, (movieId));
         this.setState(({ isFavorite: !isFavorite }));
       }
     }
@@ -56,16 +53,7 @@ const withFavoritesCheck = (WrappedComponent) => {
     }
   }
 
-  const mapStateToProps = state => ({
-    favMovies: state.Favorites.favMovies,
-  });
-
-  const mapDispatchToProps = dispatch => ({
-    onAddToFavorites: movieObj => dispatch(addToStorage(movieObj)),
-    onDeleteFromFavorites: movieId => dispatch(deleteFromStorage(movieId)),
-  });
-
-  return connect(mapStateToProps, mapDispatchToProps)(WithFavoritesCheck);
+  return withContextPortal(WithFavoritesCheck);
 };
 
 export default withFavoritesCheck;

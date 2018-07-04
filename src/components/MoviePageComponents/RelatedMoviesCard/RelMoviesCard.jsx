@@ -41,7 +41,13 @@ const RelMoviesCard = ({
     mountOnEnter
   >
     <div className={classes.customPaper}>
-      <Typography align="center" gutterBottom component="h1" variant="headline" className={classes.paperTitle}>
+      <Typography
+        align="center"
+        gutterBottom
+        component="h1"
+        variant="headline"
+        className={classes.paperTitle}
+      >
         { relatedType === 'similarMovies'
           ? 'Similar Movies:'
           : 'Recommended Movies:'

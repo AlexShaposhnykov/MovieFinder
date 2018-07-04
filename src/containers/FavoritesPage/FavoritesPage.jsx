@@ -8,6 +8,8 @@ import MoviesGallery from '../../hoc/MoviesGallery/MoviesGallery';
 
 import { initMoviesGenresFetch } from '../../store/newMovies/actions';
 
+import withContextPortal from './../../hoc/GlobalContext/withContextPortal';
+
 const styles = theme => ({
   headingWrapper: {
     height: 200,
@@ -43,29 +45,24 @@ const styles = theme => ({
 class FavoritesPage extends Component {
   static propTypes = {
     classes: PropTypes.objectOf(PropTypes.string).isRequired,
-    loading: PropTypes.bool.isRequired,
-    moviesGenres: PropTypes.arrayOf(PropTypes.any).isRequired,
-    favMovies: PropTypes.arrayOf(PropTypes.any).isRequired,
     context: PropTypes.objectOf(PropTypes.any).isRequired,
   }
 
   componentDidMount = () => {
-    const { NewMovies, Favorites, dispatch } = this.props.context;
+    const { NewMovies, dispatch } = this.props.context;
     const { moviesGenres } = NewMovies;
 
     if (moviesGenres.length === 0) {
-      dispatch(onFavoritesLoad());
+      dispatch(initMoviesGenresFetch);
     }
     window.scrollTo(0, 0);
   }
 
   render() {
-    const {
-      classes,
-      favMovies,
-      moviesGenres,
-      loading,
-    } = this.props;
+    const { classes } = this.props
+    const { Favorites, NewMovies } = this.props.context;
+    const { moviesGenres, loading } = NewMovies;
+    const { favMovies } = Favorites;
 
     return (
       <Fragment>
@@ -87,16 +84,5 @@ class FavoritesPage extends Component {
     );
   }
 }
-/*
-const mapStateToProps = state => ({
-  favMovies: state.Favorites.favMovies,
-  moviesGenres: state.Home.moviesGenres,
-  loading: state.Home.loadingGenres,
-});
 
-const mapDispatchToProps = dispatch => ({
-  onFavoritesLoad: () => dispatch(initMoviesGenresFetch()),
-});
-*/
-
-export default withStyles(styles)(FavoritesPage);
+export default withContextPortal(withStyles(styles)(FavoritesPage));
