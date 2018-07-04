@@ -13,29 +13,29 @@ export const syncStorages = (context) => {
   //console.log('sync', favMovies);
   localStorage.setItem('favoriteMovies', JSON.stringify(favMovies));
 };
-
-export const addToStorage = (context, movieObj) => {
+// Works Fine
+export const addToStorage = (context, movieObj) => context.update('Favorites', {
+  favMovies: [...context.Favorites.favMovies, ...movieObj],
+});
+/*
   console.log('addToStorage obj', movieObj);
-  context.update('Favorites', {
-    favMovies: [...context.Favorites.favMovies, ...movieObj],
-  });
+  return 
 
-  console.log('addToStorage action', context.Favorites.favMovies);
+  console.log('addToStorage finished', context.Favorites.favMovies);
 
   //console.log('add to storage', context.Favorites.favMovies);
 
   //return syncStorages(context);
-};
-
+;
+*/
+// FIXME: deleteFromStorage cant filter out any elements
 export const deleteFromStorage = (context, movieId) => {
-  console.log('MovieIDinACtion', movieId);
-  console.log('FavMovies in deleteFromStorage', context.Favorites.favMovies);
-  return context.update('Favorites', {
-    favMovies: [...context.Favorites.favMovies.filter(movie => movie.id !== movieId)],
+  const curContext = context.Favorites.favMovies;
+  console.log('CurContext', curContext);
+  const updatedContext = context.Favorites.favMovies.filter(movie => movie.id !== movieId); //.filter(movie => movie.id !== movieId);
+  console.log('updatedContext', updatedContext);
+
+  context.update('Favorites', {
+    favMovies: [...updatedContext],
   });
-
-  // console.log('remove from storage', context.Favorites.favMovies);
-
-  // return syncStorages(context);
 };
-

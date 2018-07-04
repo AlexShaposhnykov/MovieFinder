@@ -59,7 +59,7 @@ class FavoritesPage extends Component {
   }
 
   render() {
-    const { classes } = this.props
+    const { classes } = this.props;
     const { Favorites, NewMovies } = this.props.context;
     const { moviesGenres, loading } = NewMovies;
     const { favMovies } = Favorites;

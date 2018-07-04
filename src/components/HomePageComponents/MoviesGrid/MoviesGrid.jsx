@@ -19,17 +19,12 @@ class MoviesGrid extends Component {
     hasMorePages: true,
   }
 
-  componentDidMount = () => {
-    console.log(this.props.context.NewMovies);
-  }
-
   handleMoviesLoad = () => {
     const { dispatch, NewMovies } = this.props.context;
     const { loading, loadingGenres } = NewMovies;
 
     if (!loading && !loadingGenres) {
       dispatch(initMoviesFetch);
-      console.log('handleMoviesLoad', NewMovies);
     }
   }
 
@@ -48,7 +43,6 @@ class MoviesGrid extends Component {
       moviesGenres,
       curPage,
     } = NewMovies;
-    // console.log('Movies Grid', moviesGenres);
 
     return (
       <InfiniteScroll

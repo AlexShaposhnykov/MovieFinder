@@ -32,11 +32,14 @@ const withFavoritesCheck = (WrappedComponent) => {
       const { isFavorite } = this.state;
       const { movieObj, movieId } = this.props;
       const { dispatch } = this.props.context;
-        
+
       if (!isFavorite) {
         dispatch(addToStorage, (movieObj));
+        // addToStorage(this.props.context, movieObj);
         this.setState(({ isFavorite: !isFavorite }));
       } else {
+        console.log('HOCS movieID', movieId);
+        // deleteFromStorage(this.props.context, movieId);
         dispatch(deleteFromStorage, (movieId));
         this.setState(({ isFavorite: !isFavorite }));
       }
