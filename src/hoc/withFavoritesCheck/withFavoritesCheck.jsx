@@ -31,17 +31,15 @@ const withFavoritesCheck = (WrappedComponent) => {
     toggleFavoriteBtn = () => {
       const { isFavorite } = this.state;
       const { movieObj, movieId } = this.props;
-      const { dispatch } = this.props.context;
 
       if (!isFavorite) {
-        dispatch(addToStorage, (movieObj));
-        // addToStorage(this.props.context, movieObj);
-        this.setState(({ isFavorite: !isFavorite }));
+        this.setState(({ isFavorite: true }));
+        addToStorage(this.props.context, movieObj);
+        console.log('hoc addToStorage', this.props.context.Favorites.favMovies);
       } else {
-        console.log('HOCS movieID', movieId);
-        // deleteFromStorage(this.props.context, movieId);
-        dispatch(deleteFromStorage, (movieId));
-        this.setState(({ isFavorite: !isFavorite }));
+        this.setState(({ isFavorite: false }));
+        deleteFromStorage(this.props.context, movieId);
+        console.log('hoc deleteFromStorage', this.props.context.Favorites.favMovies);
       }
     }
 

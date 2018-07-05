@@ -49,11 +49,11 @@ class FavoritesPage extends Component {
   }
 
   componentDidMount = () => {
-    const { NewMovies, dispatch } = this.props.context;
+    const { NewMovies } = this.props.context;
     const { moviesGenres } = NewMovies;
 
     if (moviesGenres.length === 0) {
-      dispatch(initMoviesGenresFetch);
+      initMoviesGenresFetch(this.props.context);
     }
     window.scrollTo(0, 0);
   }

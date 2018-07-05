@@ -101,11 +101,10 @@ class SearchBar extends Component {
   }
 
   initSearch = () => {
-    const { dispatch } = this.props.context;
     const { searchInputValue } = this.state;
 
     if (this.state.searchInputValue !== '') {
-      dispatch(requestSearchResults, (searchInputValue));
+      requestSearchResults(this.props.context, searchInputValue);
     }
   }
 

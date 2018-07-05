@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -10,7 +10,8 @@ import HomePage from './containers/HomePage/HomePage';
 import MoviePage from './containers/MoviePage/MoviePage';
 import FavoritesPage from './containers/FavoritesPage/FavoritesPage';
 
-import WithGlobalContext from './hoc/GlobalContext/WithGlobalContext';
+import withContextPortal from './hoc/GlobalContext/withContextPortal';
+import { initLocalStorage } from './store/favorites/actions';
 
 const theme = createMuiTheme({
   palette: {
@@ -32,31 +33,37 @@ const theme = createMuiTheme({
   },
 });
 
-const Root = () => (
-  <WithGlobalContext>
-    <MuiThemeProvider theme={theme}>
-      <CssBaseline />
-      <BrowserRouter>
-        <Layout>
-          <Switch>
-            <Route
-              path="/movie/:id"
-              component={MoviePage}
-            />
-            <Route
-              path="/favorites"
-              component={FavoritesPage}
-            />
-            <Route
-              path="/"
-              component={HomePage}
-            />
-            <Redirect to="/" />
-          </Switch>
-        </Layout>
-      </BrowserRouter>
-    </MuiThemeProvider>
-  </WithGlobalContext>
-);
+class Root extends PureComponent {
+  componentDidMount = () => {
+    initLocalStorage(this.props.context);
+  }
+  
+  render() {
+    return (
+      <MuiThemeProvider theme={theme}>
+        <CssBaseline />
+        <BrowserRouter>
+          <Layout>
+            <Switch>
+              <Route
+                path="/movie/:id"
+                component={MoviePage}
+              />
+              <Route
+                path="/favorites"
+                component={FavoritesPage}
+              />
+              <Route
+                path="/"
+                component={HomePage}
+              />
+              <Redirect to="/" />
+            </Switch>
+          </Layout>
+        </BrowserRouter>
+      </MuiThemeProvider>
+    );
+  }
+}
 
-export default Root;
+export default withContextPortal(Root);

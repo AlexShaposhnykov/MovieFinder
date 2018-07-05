@@ -20,11 +20,11 @@ class MoviesGrid extends Component {
   }
 
   handleMoviesLoad = () => {
-    const { dispatch, NewMovies } = this.props.context;
+    const { NewMovies } = this.props.context;
     const { loading, loadingGenres } = NewMovies;
 
     if (!loading && !loadingGenres) {
-      dispatch(initMoviesFetch);
+      initMoviesFetch(this.props.context);
     }
   }
 

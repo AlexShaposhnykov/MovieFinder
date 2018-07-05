@@ -23,9 +23,8 @@ class MoviePage extends Component {
 
   componentDidMount = () => {
     const { lastMovie } = this.state;
-    const { dispatch } = this.props.context;
 
-    dispatch(initSelectedMovieFetch, (lastMovie));
+    initSelectedMovieFetch(this.props.context, lastMovie);
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -40,10 +39,9 @@ class MoviePage extends Component {
   // Update data on movie id(URL) change
   componentDidUpdate = (_, prevState) => {
     const { lastMovie } = this.state;
-    const { dispatch } = this.props.context;
 
     if (prevState.lastMovie !== lastMovie) {
-      dispatch(initSelectedMovieFetch, (lastMovie));
+      initSelectedMovieFetch(this.props.context, lastMovie);
     }
   }
 

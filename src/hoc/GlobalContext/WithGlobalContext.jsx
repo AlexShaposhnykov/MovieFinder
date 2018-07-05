@@ -30,7 +30,6 @@ class WithGlobalContext extends Component {
     Favorites: {
       favMovies: [],
     },
-    dispatch: (action, ...funcParams) => action(this.state, funcParams),
     update: (contextPath, pendingsContextUpdate) => {
       this.setState(state => ({
         ...state,
