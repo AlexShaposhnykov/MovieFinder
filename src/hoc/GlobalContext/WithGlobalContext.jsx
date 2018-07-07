@@ -30,14 +30,14 @@ class WithGlobalContext extends Component {
     Favorites: {
       favMovies: [],
     },
-    update: (contextPath, pendingsContextUpdate) => {
+    update: (contextPath, pendingsContextUpdate, callback) => {
       this.setState(state => ({
         ...state,
         [contextPath]: {
           ...state[contextPath],
           ...pendingsContextUpdate,
         },
-      }));
+      }), callback);
     },
   }
 

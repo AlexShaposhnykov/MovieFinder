@@ -2,7 +2,6 @@ export const initLocalStorage = (context) => {
   if (localStorage.getItem('favoriteMovies') === null) {
     localStorage.setItem('favoriteMovies', JSON.stringify([]));
   }
-
   const storedData = JSON.parse(localStorage.getItem('favoriteMovies'));
 
   context.update('Favorites', {
@@ -11,28 +10,18 @@ export const initLocalStorage = (context) => {
 };
 
 export const syncStorages = (context) => {
-  const { Favorites } = context;
-  const { favMovies } = Favorites;
-  console.log('syncStorages arr', favMovies);
-
-  localStorage.setItem('favoriteMovies', JSON.stringify(favMovies));
+  localStorage.setItem('favoriteMovies', JSON.stringify(context.Favorites.favMovies));
+  console.log('syncStorages arr', context.Favorites.favMovies);
 };
 
-export const addToStorage = (context, movieObj) => {
+export const addToStorage = (context, movieObj) => (
   context.update('Favorites', {
-    favMovies: [...context.Favorites.favMovies, movieObj],
-  });
+    favMovies: [movieObj, ...context.Favorites.favMovies],
+  }, () => syncStorages(context))
+);
 
-  console.log('addToStorage arr', context.Favorites.favMovies);
-
-  return syncStorages(context);
-};
-
-export const deleteFromStorage = (context, movieId) => {
+export const deleteFromStorage = (context, movieId) => (
   context.update('Favorites', {
-    favMovies: [...context.Favorites.favMovies.filter(movie => movie.id !== movieId)],
-  });
-  console.log('deleteFromStorage arr', context.Favorites.favMovies);
-
-  return syncStorages(context);
-};
+    favMovies: context.Favorites.favMovies.filter(movie => movie.id !== movieId),
+  }, () => syncStorages(context))
+);

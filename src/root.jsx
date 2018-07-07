@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +13,7 @@ import FavoritesPage from './containers/FavoritesPage/FavoritesPage';
 
 import withContextPortal from './hoc/GlobalContext/withContextPortal';
 import { initLocalStorage } from './store/favorites/actions';
+
 
 const theme = createMuiTheme({
   palette: {
@@ -34,10 +36,14 @@ const theme = createMuiTheme({
 });
 
 class Root extends PureComponent {
+  static propTypes = {
+    context: PropTypes.objectOf(PropTypes.any).isRequired,
+  }
+
   componentDidMount = () => {
     initLocalStorage(this.props.context);
   }
-  
+
   render() {
     return (
       <MuiThemeProvider theme={theme}>
