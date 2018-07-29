@@ -8,9 +8,9 @@ import Grid from '@material-ui/core/Grid';
 import Chip from '@material-ui/core/Chip';
 import Grow from '@material-ui/core/Grow';
 
-import FavoritesBtn from '../../FavoritesBtn/FavoritesBtn';
+import FavoritesBtn from 'components/FavoritesBtn';
 
-import withFavoritesCheck from '../../../hoc/withFavoritesCheck/withFavoritesCheck';
+import withFavoritesCheck from 'hoc/withFavoritesCheck';
 
 const styles = theme => ({
   infoWrapper: {

@@ -5,7 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Grow from '@material-ui/core/Grow';
 
-import MoviesGallery from '../../../hoc/MoviesGallery/MoviesGallery';
+import MoviesGallery from 'containers/MoviesGallery';
 
 const styles = {
   customPaper: {

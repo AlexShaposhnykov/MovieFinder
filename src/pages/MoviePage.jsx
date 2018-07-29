@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 
 import LinearProgress from '@material-ui/core/LinearProgress';
 
-import SelectedMovieCard from '../../components/MoviePageComponents/SelectedMovieCard/SelectedMovieCard';
+import SelectedMovieCard from 'components/SelectedMovieCard';
 
-import RelMoviesCard from '../../components/MoviePageComponents/RelatedMoviesCard/RelMoviesCard';
+import RelMoviesCard from 'components/RelMoviesCard';
 
-import withContextPortal from '../../hoc/GlobalContext/withContextPortal';
+import withContextPortal from 'hoc/GlobalContext/withContextPortal';
 
-import { initSelectedMovieFetch } from '../../store/selectedMovie/actions';
+import { initSelectedMovieFetch } from 'store/selectedMovie/actions';
 
 class MoviePage extends Component {
   static propTypes = {
@@ -57,19 +57,22 @@ class MoviePage extends Component {
       similarMovies,
     } = SelectedMovie;
 
-    let selectedMovieCard = <LinearProgress color="secondary" />;
-    if (!loading && !Array.isArray(selectedMovie)) {
-      selectedMovieCard = (
-        <SelectedMovieCard
-          movieObj={selectedMovie}
-          movieId={selectedMovie.id}
-        />
-      );
-    }
-
     return (
       <Fragment>
-        { selectedMovieCard }
+
+        {
+          !loading && !Array.isArray(selectedMovie)
+          ? (
+            <SelectedMovieCard
+              movieObj={selectedMovie}
+              movieId={selectedMovie.id}
+            />
+          )
+          : (
+            <LinearProgress color="secondary" />
+          )
+        }
+
         <RelMoviesCard
           relatedType="recommendedMovies"
           loading={loadingRecommended}

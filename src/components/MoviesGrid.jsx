@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import InfiniteScroll from 'react-infinite-scroller';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import { initMoviesFetch } from '../../../store/newMovies/actions';
+import { initMoviesFetch } from 'store/newMovies/actions';
 
-import MoviesGallery from '../../../hoc/MoviesGallery/MoviesGallery';
+import MoviesGallery from 'containers/MoviesGallery';
 
-import withContextPortal from '../../../hoc/GlobalContext/withContextPortal';
+import withContextPortal from 'hoc/GlobalContext/withContextPortal';
 
 class MoviesGrid extends Component {
   static propTypes = {

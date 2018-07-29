@@ -2,10 +2,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import withContextPortal from './../GlobalContext/withContextPortal';
+import withContextPortal from 'hoc/GlobalContext/withContextPortal';
 
-import { isInFavorites } from '../../shared/utility';
-import { addToStorage, deleteFromStorage } from '../../store/favorites/actions';
+import { isInFavorites } from 'shared/utility';
+import { addToStorage, deleteFromStorage } from 'store/favorites/actions';
 
 const withFavoritesCheck = (WrappedComponent) => {
   class WithFavoritesCheck extends Component {

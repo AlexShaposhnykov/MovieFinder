@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react';
 
 import Root from './root';
 
-import WithGlobalContext from './hoc/GlobalContext/WithGlobalContext';
+import WithGlobalContext from 'hoc/GlobalContext/WithGlobalContext';
 
 class App extends PureComponent {
   render() {

@@ -15,9 +15,9 @@ import Star from '@material-ui/icons/Star';
 import StarBorder from '@material-ui/icons/StarBorder';
 import Search from '@material-ui/icons/Search';
 
-import SearchBar from './SearchBar/SearchBar';
+import withContextPortal from 'hoc/GlobalContext/withContextPortal';
 
-import withContextPortal from '../../hoc/GlobalContext/withContextPortal';
+import SearchBar from './SearchBar/SearchBar';
 
 const styles = theme => ({
   toolbar: {

@@ -9,12 +9,12 @@ import Collapse from '@material-ui/core/Collapse';
 import Paper from '@material-ui/core/Paper';
 import Downshift from 'downshift';
 
-import { requestSearchResults } from '../../../store/search/actions';
+import withContextPortal from 'hoc/GlobalContext/withContextPortal';
+
+import { getMovieGenres } from 'shared/utility';
+
+import { requestSearchResults } from 'store/search/actions';
 import SearchSuggestion from './SearchSuggestion';
-
-import withContextPortal from '../../../hoc/GlobalContext/withContextPortal';
-
-import { getMovieGenres } from '../../../shared/utility';
 
 const styles = theme => ({
   searchWrapper: {

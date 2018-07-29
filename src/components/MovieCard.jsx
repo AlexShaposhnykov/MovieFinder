@@ -8,9 +8,9 @@ import Paper from '@material-ui/core/Paper';
 import Chip from '@material-ui/core/Chip';
 import Grow from '@material-ui/core/Grow';
 
-import FavoritesBtn from '../FavoritesBtn/FavoritesBtn';
+import withFavoritesCheck from 'hoc/withFavoritesCheck';
 
-import withFavoritesCheck from '../../hoc/withFavoritesCheck/withFavoritesCheck';
+import FavoritesBtn from './FavoritesBtn';
 
 const refreshPagePosition = () => window.scrollTo(0, 0);
 

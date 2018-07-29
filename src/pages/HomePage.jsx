@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import MoviesWrapper from '../../components/HomePageComponents/MoviesWrapper/MoviesWrapper';
-import MoviesGrid from '../../components/HomePageComponents/MoviesGrid/MoviesGrid';
+import MoviesWrapper from 'components/MoviesWrapper';
+import MoviesGrid from 'components/MoviesGrid';
 
 const styles = {
   headline: {

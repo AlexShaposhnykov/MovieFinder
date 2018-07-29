@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import Fade from '@material-ui/core/Fade';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import MoviesGallery from '../../hoc/MoviesGallery/MoviesGallery';
+import MoviesGallery from 'containers/MoviesGallery';
 
-import { initMoviesGenresFetch } from '../../store/newMovies/actions';
+import { initMoviesGenresFetch } from 'store/newMovies/actions';
 
-import withContextPortal from './../../hoc/GlobalContext/withContextPortal';
+import withContextPortal from 'hoc/GlobalContext/withContextPortal';
 
 const styles = theme => ({
   headingWrapper: {

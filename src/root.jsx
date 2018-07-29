@@ -6,14 +6,13 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { Switch, Route } from 'react-router';
 import { BrowserRouter, Redirect } from 'react-router-dom';
 
-import Layout from './hoc/Layout/Layout';
-import HomePage from './containers/HomePage/HomePage';
-import MoviePage from './containers/MoviePage/MoviePage';
-import FavoritesPage from './containers/FavoritesPage/FavoritesPage';
+import Layout from 'hoc/Layout';
+import HomePage from 'pages/HomePage';
+import MoviePage from 'pages/MoviePage';
+import FavoritesPage from 'pages/FavoritesPage';
 
-import withContextPortal from './hoc/GlobalContext/withContextPortal';
-import { initLocalStorage } from './store/favorites/actions';
-
+import withContextPortal from 'hoc/GlobalContext/withContextPortal';
+import { initLocalStorage } from 'store/favorites/actions';
 
 const theme = createMuiTheme({
   palette: {
